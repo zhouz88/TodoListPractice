@@ -10,6 +10,7 @@ import android.view.View;
 import com.google.gson.reflect.TypeToken;
 import com.zhezhe.todolist.models.ModelUtils;
 import com.zhezhe.todolist.models.Todo;
+import com.zhezhe.todolist.views.TodoListAdapter;
 import com.zhezhe.todolist.views.TodoListFragment;
 
 import java.util.ArrayList;
@@ -48,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_container,
-                        fragment).commitNow();
+                .add(R.id.fragment_container,
+                        fragment).commit();
     }
 
     @Override

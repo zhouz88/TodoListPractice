@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zhezhe.todolist.R;
-import com.zhezhe.todolist.TodoListAdapter;
 import com.zhezhe.todolist.models.Todo;
 
 import java.util.List;

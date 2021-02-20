@@ -1,4 +1,4 @@
-package com.zhezhe.todolist;
+package com.zhezhe.todolist.views;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.zhezhe.todolist.MainActivity;
+import com.zhezhe.todolist.R;
+import com.zhezhe.todolist.TodoEditActivity;
 import com.zhezhe.todolist.models.Todo;
 import com.zhezhe.todolist.utils.UIUtils;
 
@@ -63,7 +66,6 @@ public class TodoListAdapter extends RecyclerView.Adapter {
                 activity.startActivityForResult(intent, REQ_CODE_BACK);
             }
         });
-
 
     }
 
