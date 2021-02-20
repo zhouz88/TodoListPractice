@@ -1,0 +1,167 @@
+package com.zhezhe.todolist;
+
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.TimePicker;
+
+import com.zhezhe.todolist.models.Todo;
+import com.zhezhe.todolist.utils.DateUtils;
+import com.zhezhe.todolist.utils.UIUtils;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Objects;
+
+public class TodoEditActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+    public static final String DELETE_ID = "FROM_TODO_ACTIVITY_DELETE";
+    public static final String POST_OR_PUT_ID = "FROM_TODO_ACTIVITY";
+
+
+    private EditText todoEdit;
+    private TextView date;
+    private TextView time;
+    private CheckBox completedCheckBox;
+    private TextView deleteButton;
+    private FloatingActionButton fab;
+    private LinearLayout checkboxAndTextView;
+
+    private Todo todo;
+    private Date remindDate;
+    private UIUtils uiUtils;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        todo = getIntent().getParcelableExtra("KEY_TODO");
+        if (Objects.nonNull(todo)) {
+            remindDate = todo.getRemindDate();
+        }
+        uiUtils = UIUtils.builder().build();
+        setContentView(R.layout.edit);
+        todoEdit = findViewById(R.id.edit_text);
+        date = findViewById(R.id.todo_detail_date);
+        time = findViewById(R.id.todo_detail_time);
+        completedCheckBox = findViewById(R.id.todo_detail_complete);
+        deleteButton = findViewById(R.id.todo_delete);
+        fab = findViewById(R.id.fab);
+        checkboxAndTextView = findViewById(R.id.todo_detail_complete_wrapper);
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setElevation(0);
+        setTitle(null);
+
+        if (Objects.nonNull(todo)) {
+            //初始化 数据
+            todoEdit.setText(todo.getText());
+            uiUtils.setTextViewStrikeThrough(todoEdit, todo.isDone());
+            completedCheckBox.setChecked(todo.isDone());
+            deleteButton.setOnClickListener(this);
+        } else {
+            deleteButton.setVisibility(View.GONE);
+        }
+
+        if (Objects.isNull(remindDate)) {
+            date.setText(R.string.set_date);
+            time.setText(R.string.set_time);
+        } else {
+            date.setText(DateUtils.dateToStringDate(remindDate));
+            time.setText(DateUtils.dateToStringTime(remindDate));
+        }
+
+        date.setOnClickListener(this);
+        time.setOnClickListener(this);
+        completedCheckBox.setOnCheckedChangeListener(this);
+        checkboxAndTextView.setOnClickListener(this);
+        fab.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == deleteButton) {
+            Intent intent = new Intent();
+            intent.putExtra(DELETE_ID, todo.getId());
+            setResult(RESULT_OK, intent);
+            finish();
+        } else if (v == date) {
+            Calendar calendar = Calendar.getInstance();
+            if (remindDate != null) {
+                calendar.setTime(remindDate);
+            }
+            Dialog dialog = new DatePickerDialog(TodoEditActivity.this,
+                    new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                            Calendar calendar = Calendar.getInstance();
+                            if (remindDate != null) {
+                                calendar.setTime(remindDate);
+                            }
+                            calendar.set(year, month, dayOfMonth);
+                            remindDate = calendar.getTime();
+                            date.setText(DateUtils.dateToStringDate(remindDate));
+                        }
+                    }, calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONDAY),
+                    calendar.get(Calendar.DAY_OF_MONTH));
+            dialog.show();
+        } else if (v == time) {
+            Calendar cur = Calendar.getInstance();
+            if (remindDate != null) {
+                cur.setTime(remindDate);
+            }
+            Dialog dialog = new TimePickerDialog(TodoEditActivity.this,
+                    new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            Calendar calendar = Calendar.getInstance();
+                            if (remindDate != null) {
+                                calendar.setTime(remindDate);
+                            }
+                            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                            calendar.set(Calendar.MINUTE, minute);
+                            remindDate = calendar.getTime();
+                            time.setText(DateUtils.dateToStringTime(remindDate));
+                        }
+                    }, cur.get(Calendar.HOUR),
+                    cur.get(Calendar.MINUTE), false);
+            dialog.show();
+        } else if (v == checkboxAndTextView) {
+            boolean check = !completedCheckBox.isChecked();
+            completedCheckBox.setChecked(check);
+        } else if (v == fab) {
+            if (todo == null) {
+                // post
+                todo = new Todo(todoEdit.getText().toString(), remindDate);
+            } else {
+                //put
+                todo.setText(todoEdit.getText().toString());
+                todo.setRemindDate(remindDate);
+            }
+
+            Intent intent = new Intent();
+            intent.putExtra(POST_OR_PUT_ID, todo);
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        uiUtils.setTextViewStrikeThrough(todoEdit, isChecked);
+        todoEdit.setTextColor(isChecked ? Color.GRAY: Color.WHITE);
+    }
+}
