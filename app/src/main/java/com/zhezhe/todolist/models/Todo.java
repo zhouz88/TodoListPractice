@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.util.Date;
 import java.util.UUID;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,7 @@ public class Todo implements Parcelable {
 
     private Date remindDate;
 
+    @Builder
     public Todo(String text, Date remindDate) {
         this.id = UUID.randomUUID().toString();
         this.text = text;

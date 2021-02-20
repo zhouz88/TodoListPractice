@@ -5,14 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.google.gson.reflect.TypeToken;
 import com.zhezhe.todolist.models.ModelUtils;
 import com.zhezhe.todolist.models.Todo;
+import com.zhezhe.todolist.views.TodoListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +25,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private List<Todo> list;
 
-    private RecyclerView importantView;
     private FloatingActionButton fab;
-    private TodoListAdapter todoListAdapter;
+    private TodoListFragment fragment;
 
 
     @Override
@@ -37,19 +34,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.importantView = this.findViewById(R.id.main_recycler_view);
         this.fab = this.findViewById(R.id.fab);
         this.list = ModelUtils.read(this, TODOS, new TypeToken<List<Todo>>() {
         });
         if (Objects.isNull(list)) {
             this.list = new ArrayList<>();
         }
-
         fab.setOnClickListener(this);
+        fragment = TodoListFragment
+                .newInstance()
+                .list(list)
+                .todoListAdapter(TodoListAdapter.builder().list(list).build());
 
-        importantView.setLayoutManager(new LinearLayoutManager(this));
-        todoListAdapter = TodoListAdapter.builder().list(list).build();
-        importantView.setAdapter(todoListAdapter);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container,
+                        fragment).commitNow();
     }
 
     @Override
@@ -65,18 +65,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == REQ_CODE_BACK && resultCode == RESULT_OK) {
             String todoId = intent.getStringExtra(DELETE_ID);
-            if (todoId != null) {
-                // Delete
+            if (Objects.nonNull(todoId)) {
+                // Delete from other activites
                 for (int i = 0; i < list.size(); i++) {
                     if (list.get(i).getId().equals(todoId)) {
                         list.remove(i);
                         break;
                     }
                 }
-                todoListAdapter.notifyDataSetChanged();
+                fragment.todoListAdapter().notifyDataSetChanged();
                 ModelUtils.save(this, TODOS, list);
             } else {
-                // Post or Put  // put from other activies
+                // Post or Put  // put from other activites
                 boolean found = false;
                 Todo todo = intent.getParcelableExtra(POST_OR_PUT_ID);
                 for (int i = 0; i < list.size(); i++) {
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (!found) {
                     list.add(todo);
                 }
-                todoListAdapter.notifyDataSetChanged();
+                fragment.todoListAdapter().notifyDataSetChanged();
                 ModelUtils.save(this, TODOS, list);
             }
         }
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void updateTodo(int i, boolean status) {
         // Put from this activity
         list.get(i).setDone(status);
-        todoListAdapter.notifyDataSetChanged();
+        fragment.todoListAdapter().notifyDataSetChanged();
         ModelUtils.save(this, TODOS, list);
     }
 }

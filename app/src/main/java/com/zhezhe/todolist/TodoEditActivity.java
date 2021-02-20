@@ -81,7 +81,6 @@ public class TodoEditActivity extends AppCompatActivity implements View.OnClickL
         } else {
             date.setText(DateUtils.dateToStringDate(remindDate));
             time.setText(DateUtils.dateToStringTime(remindDate));
-            Log.d("sbsbsb", remindDate.toString());
         }
 
         date.setOnClickListener(this);
@@ -128,7 +127,6 @@ public class TodoEditActivity extends AppCompatActivity implements View.OnClickL
                         cur.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         cur.set(Calendar.MINUTE, minute);
                         this.remindDate = cur.getTime();
-                        Log.d("sbsbsb", remindDate.toString());
                         time.setText(DateUtils.dateToStringTime(this.remindDate));
                     }
                     , cur.get(Calendar.HOUR),
@@ -140,7 +138,10 @@ public class TodoEditActivity extends AppCompatActivity implements View.OnClickL
         } else if (v == fab) {
             if (Objects.isNull(todo)) {
                 // post
-                todo = new Todo(todoEdit.getText().toString(), remindDate);
+                todo = Todo.builder()
+                        .text(todoEdit.getText().toString())
+                        .remindDate(remindDate)
+                        .build();
             } else {
                 //put
                 todo.setText(todoEdit.getText().toString());

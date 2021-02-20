@@ -44,7 +44,6 @@ public class TodoListAdapter extends RecyclerView.Adapter {
         holder.getCheckBox().setChecked(todo.isDone());
         holder.getTextView().setText(todo.getText());
         final MainActivity activity = (MainActivity) (holder.itemView.getContext());
-        // todo set strike
 
         uiUtils.setTextViewStrikeThrough(holder.getTextView(), todo.isDone());
         holder.getCheckBox().setOnClickListener(new View.OnClickListener() {
