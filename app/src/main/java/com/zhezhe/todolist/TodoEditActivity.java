@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -37,6 +38,7 @@ public final class TodoEditActivity extends AppCompatActivity implements View.On
     private TextView deleteButton;
     private FloatingActionButton fab;
     private LinearLayout checkboxAndTextView;
+    private Toolbar toolbar;
 
     private Todo todo;
     private Date remindDate;
@@ -59,10 +61,10 @@ public final class TodoEditActivity extends AppCompatActivity implements View.On
         fab = findViewById(R.id.fab);
         checkboxAndTextView = findViewById(R.id.todo_detail_complete_wrapper);
 
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setElevation(0);
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
         setTitle(null);
+        setSupportActionBar(toolbar);
 
         if (Objects.nonNull(todo)) {
             //初始化 数据

@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.zhezhe.todolist.models.ModelUtils;
@@ -38,12 +39,21 @@ public final class MainActivity extends AppCompatActivity implements View.OnClic
     private FloatingActionButton fab;
     private ViewPager viewPager;
     private TodoFragmentPagerAdapter viewPagerAdapter;
+    private Toolbar toolbar;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_menu);
+        toolbar.setPopupTheme(R.style.ToolbarOverlay);
+        toolbar.setElevation(R.dimen.spacing_xxsmall);
+        toolbar.setTitle(R.string.app_name);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
+        setSupportActionBar(toolbar);
 
         this.fab = this.findViewById(R.id.fab);
         fab.setOnClickListener(this);
