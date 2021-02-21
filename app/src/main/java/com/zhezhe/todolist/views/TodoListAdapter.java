@@ -21,16 +21,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.zhezhe.todolist.MainActivity.REQ_CODE_BACK;
 import static com.zhezhe.todolist.TodoEditActivity.TODO_KEY;
 
-public class TodoListAdapter extends RecyclerView.Adapter {
-    private List<Todo> list;
-    private UIUtils uiUtils = UIUtils.builder().build();
+public final class TodoListAdapter extends RecyclerView.Adapter {
+    private final List<Todo> list;
+    private final int fragmentId;
+    private final UIUtils uiUtils = UIUtils.builder().build();
 
     @Builder
-    public TodoListAdapter(List<Todo> list) {
+    public TodoListAdapter(List<Todo> list, int fragmentId) {
         this.list = list;
+        this.fragmentId = fragmentId;
     }
 
     @NonNull
@@ -54,7 +55,7 @@ public class TodoListAdapter extends RecyclerView.Adapter {
             public void onClick(View v) {
                 CheckBox cb = (CheckBox) v;
                 cb.setChecked(!todo.isDone());
-                activity.updateTodo(i, !todo.isDone());
+                activity.updateTodo(i, !todo.isDone(),fragmentId);
             }
         });
 
@@ -62,8 +63,8 @@ public class TodoListAdapter extends RecyclerView.Adapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity, TodoEditActivity.class);
-                intent.putExtra(TODO_KEY , todo);
-                activity.startActivityForResult(intent, REQ_CODE_BACK);
+                intent.putExtra(TODO_KEY, todo);
+                activity.startActivityForResult(intent, fragmentId);
             }
         });
 

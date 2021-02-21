@@ -32,6 +32,9 @@ public class TodoListFragment extends Fragment {
     @Getter
     @Setter
     private TodoListAdapter todoListAdapter;
+    @Getter
+    @Setter
+    private int id;
 
 
     @Nullable

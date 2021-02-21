@@ -9,7 +9,6 @@ import com.google.gson.reflect.TypeToken;
 
 public class ModelUtils {
     private static final Gson gson = new Gson();
-    private static final String SP_KEY = "TodolistSP";
 
     /**
      * Save the object to sp
@@ -20,7 +19,7 @@ public class ModelUtils {
      */
     public static void save(Context context, String key, Object object) {
         SharedPreferences sharedPreferences = context.getApplicationContext()
-                .getSharedPreferences(SP_KEY, Context.MODE_PRIVATE);
+                .getSharedPreferences(key, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String jsonString = gson.toJson(object);
         editor.putString(key, jsonString).apply();
@@ -37,7 +36,7 @@ public class ModelUtils {
      */
     public static <T> T read(Context context, String key, TypeToken<T> token) {
         SharedPreferences sharedPreferences = context.getApplicationContext()
-                .getSharedPreferences(SP_KEY, Context.MODE_PRIVATE);
+                .getSharedPreferences(key, Context.MODE_PRIVATE);
         try {
             return gson.fromJson(sharedPreferences.getString(key, ""), token.getType());
         } catch (JsonSyntaxException e) {
