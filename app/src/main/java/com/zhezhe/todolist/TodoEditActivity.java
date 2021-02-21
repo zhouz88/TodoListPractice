@@ -94,6 +94,7 @@ public final class TodoEditActivity extends AppCompatActivity implements View.On
     @Override
     public void onClick(View v) {
         if (v == deleteButton) {
+            // delete
             Intent intent = new Intent();
             intent.putExtra(DELETE_ID, todo.getId());
             setResult(RESULT_OK, intent);
