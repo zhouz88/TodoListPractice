@@ -9,12 +9,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.google.gson.reflect.TypeToken;
 import com.zhezhe.todolist.models.ModelUtils;
 import com.zhezhe.todolist.models.Todo;
 import com.zhezhe.todolist.views.TodoListFragment;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -24,7 +22,7 @@ import java.util.Set;
 import static com.zhezhe.todolist.TodoEditActivity.DELETE_ID;
 import static com.zhezhe.todolist.TodoEditActivity.POST_OR_PUT_ID;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public final class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String TODOS = "TODOS";
     public static final int REQ_CODE_BACK_ONE = 0;
     public static final int REQ_CODE_BACK_TWO = 1;

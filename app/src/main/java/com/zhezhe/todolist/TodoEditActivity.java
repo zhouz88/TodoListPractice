@@ -25,7 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
-public class TodoEditActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public final class TodoEditActivity extends AppCompatActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     public static final String DELETE_ID = "FROM_TODO_ACTIVITY_DELETE";
     public static final String POST_OR_PUT_ID = "FROM_TODO_ACTIVITY";
     public static final String TODO_KEY = "TODO_KEY";

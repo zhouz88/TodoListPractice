@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
-public class ModelUtils {
+public final class ModelUtils {
     private static final Gson gson = new Gson();
 
     /**

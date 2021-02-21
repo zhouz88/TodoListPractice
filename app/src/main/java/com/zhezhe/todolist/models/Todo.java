@@ -12,7 +12,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Todo implements Parcelable {
+public final class Todo implements Parcelable {
 
     private String id;
 

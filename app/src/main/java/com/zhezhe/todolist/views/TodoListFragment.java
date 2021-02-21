@@ -20,7 +20,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Accessors(fluent = true)
-public class TodoListFragment extends Fragment {
+public final class TodoListFragment extends Fragment {
 
     public static TodoListFragment newInstance() {
         return new TodoListFragment();
