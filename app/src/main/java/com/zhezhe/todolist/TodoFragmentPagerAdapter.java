@@ -43,7 +43,7 @@ public final class TodoFragmentPagerAdapter extends FragmentPagerAdapter {
                 .newInstance()
                 .list(list)
                 .id(i)
-                .todoListAdapter(TodoListAdapter.builder().list(list).build());
+                .todoListAdapter(TodoListAdapter.builder().list(list).fragmentId(i).build());
         map[i] = fragment;
         return fragment;
     }
