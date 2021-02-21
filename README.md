@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
-fragments, viewpager, recyclerview, TimePickerDialog, DatePickerDialog, activity, TabLayout, etc review
+fragments, viewpager, recyclerview, TimePickerDialog, DatePickerDialog, activity, TabLayout, toolbar etc review
 
 
 Todo:
