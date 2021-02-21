@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.zhezhe.todolist.models.ModelUtils;
 import com.zhezhe.todolist.models.Todo;
+import com.zhezhe.todolist.utils.UIUtils;
 import com.zhezhe.todolist.views.TodoListAdapter;
 import com.zhezhe.todolist.views.TodoListFragment;
 
@@ -23,11 +24,13 @@ public final class TodoFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private final Context context;
     private final TodoListFragment[] map = new TodoListFragment[4];
+    private final UIUtils uiUtils;
 
     @Builder
-    public TodoFragmentPagerAdapter(FragmentManager fm, Context context) {
-        super(fm);
+    public TodoFragmentPagerAdapter(FragmentManager fragmentManager, Context context, UIUtils uiUtils) {
+        super(fragmentManager);
         this.context = context;
+        this.uiUtils = uiUtils;
     }
 
     @Override
@@ -43,7 +46,13 @@ public final class TodoFragmentPagerAdapter extends FragmentPagerAdapter {
                 .newInstance()
                 .list(list)
                 .id(i)
-                .todoListAdapter(TodoListAdapter.builder().list(list).fragmentId(i).build());
+                .todoListAdapter(
+                        TodoListAdapter
+                        .builder()
+                        .list(list)
+                        .fragmentId(i)
+                        .uIutils(uiUtils)
+                        .build());
         map[i] = fragment;
         return fragment;
     }

@@ -26,12 +26,13 @@ import static com.zhezhe.todolist.TodoEditActivity.TODO_KEY;
 public final class TodoListAdapter extends RecyclerView.Adapter {
     private final List<Todo> list;
     private final int fragmentId;
-    private final UIUtils uiUtils = UIUtils.builder().build();
+    private final UIUtils uiUtils;
 
     @Builder
-    public TodoListAdapter(List<Todo> list, int fragmentId) {
+    public TodoListAdapter(List<Todo> list, int fragmentId, UIUtils uIutils) {
         this.list = list;
         this.fragmentId = fragmentId;
+        this.uiUtils = uIutils;
     }
 
     @NonNull

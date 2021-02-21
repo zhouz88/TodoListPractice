@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import static com.zhezhe.todolist.TodoApplication.UI_UTIL;
 import static com.zhezhe.todolist.TodoEditActivity.DELETE_ID;
 import static com.zhezhe.todolist.TodoEditActivity.POST_OR_PUT_ID;
 
@@ -63,7 +64,8 @@ public final class MainActivity extends AppCompatActivity implements View.OnClic
         viewPagerAdapter =
                 TodoFragmentPagerAdapter.builder()
                         .context(this)
-                        .fm(getSupportFragmentManager())
+                        .fragmentManager(getSupportFragmentManager())
+                        .uiUtils(((TodoApplication) this.getApplication()).getSingletons().get(UI_UTIL))
                         .build();
         viewPager.setAdapter(viewPagerAdapter);
     }
