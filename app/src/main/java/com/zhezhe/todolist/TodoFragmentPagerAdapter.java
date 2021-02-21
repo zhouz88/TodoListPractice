@@ -12,9 +12,7 @@ import com.zhezhe.todolist.views.TodoListAdapter;
 import com.zhezhe.todolist.views.TodoListFragment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import lombok.Builder;
@@ -24,7 +22,7 @@ import static com.zhezhe.todolist.MainActivity.TODOS;
 public final class TodoFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private final Context context;
-    private final Map<Integer, Fragment> map = new HashMap<>(4);
+    private final TodoListFragment[] map = new TodoListFragment[4];
 
     @Builder
     public TodoFragmentPagerAdapter(FragmentManager fm, Context context) {
@@ -34,8 +32,8 @@ public final class TodoFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        if (map.containsKey(i)) {
-            return map.get(i);
+        if (Objects.nonNull(map[i])) {
+            return map[i];
         }
         List<Todo> list = ModelUtils.read(context, TODOS+i, new TypeToken<List<Todo>>() {});
         if (Objects.isNull(list)) {
@@ -46,7 +44,7 @@ public final class TodoFragmentPagerAdapter extends FragmentPagerAdapter {
                 .list(list)
                 .id(i)
                 .todoListAdapter(TodoListAdapter.builder().list(list).build());
-        map.put(i, fragment);
+        map[i] = fragment;
         return fragment;
     }
 
