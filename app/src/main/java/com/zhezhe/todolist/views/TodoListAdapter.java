@@ -54,6 +54,7 @@ public final class TodoListAdapter extends RecyclerView.Adapter {
         holder.getCheckBox().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // put
                 CheckBox cb = (CheckBox) v;
                 cb.setChecked(!todo.isDone());
                 activity.updateTodo(i, !todo.isDone(),fragmentId);
