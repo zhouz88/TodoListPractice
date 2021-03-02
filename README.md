@@ -9,3 +9,6 @@ fragments, viewpager, recyclerview, TimePickerDialog, DatePickerDialog, activity
 
 Todo:
 replace the libraries with androidx/jetpack and using mvp, mvc, mvvm to create another 3 branches
+
+
+深入解析WindowManager http://moonfacex.github.io/blog/android/2016/04/19/activity_window_viewRootImpl.html
