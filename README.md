@@ -12,3 +12,8 @@ replace the libraries with androidx/jetpack and using mvp, mvc, mvvm to create a
 
 
 深入解析WindowManager http://moonfacex.github.io/blog/android/2016/04/19/activity_window_viewRootImpl.html
+
+
+
+自定义 draw
+https://blog.csdn.net/xx326664162/article/details/63254622
