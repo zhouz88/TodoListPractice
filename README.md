@@ -17,3 +17,6 @@ replace the libraries with androidx/jetpack and using mvp, mvc, mvvm to create a
 
 自定义 draw
 https://blog.csdn.net/xx326664162/article/details/63254622
+
+
+彻底删 android studio
