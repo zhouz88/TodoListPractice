@@ -20,3 +20,4 @@ https://blog.csdn.net/xx326664162/article/details/63254622
 
 
 彻底删 android studio
+https://blog.csdn.net/dou_being/article/details/105307824
